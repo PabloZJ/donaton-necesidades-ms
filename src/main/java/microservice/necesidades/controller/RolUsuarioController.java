@@ -16,7 +16,7 @@ import microservice.necesidades.model.RolUsuario;
 import microservice.necesidades.service.RolUsuarioService;
 
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/roles")
 public class RolUsuarioController {
 
     @Autowired

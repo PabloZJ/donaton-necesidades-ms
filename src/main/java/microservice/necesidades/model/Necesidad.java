@@ -31,14 +31,17 @@ public class Necesidad {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal cantidad;
 
+    @Column(name = "cantidad_cubierta", precision = 10, scale = 2)
+    private BigDecimal cantidadCubierta;
+
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @Column(nullable = false, precision = 9, scale = 6)
-    private BigDecimal latitud;
+    @Column(nullable = false)
+    private String direccion;
 
-    @Column(nullable = false, precision = 9, scale = 6)
-    private BigDecimal longitud;
+    @Column(name = "comuna_id", nullable = false)
+    private Integer comunaId;
 
     @ManyToOne
     @JoinColumn(name = "estado_id", nullable = false)

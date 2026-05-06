@@ -35,4 +35,10 @@ public class UsuarioPerfil {
     @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
     private RolUsuario rol;
+
+    @Column(name = "centro_acopio_id")
+    private Integer centroAcopioId;
+
+    @Column(name = "comuna_id")
+    private Integer comunaId;
 }

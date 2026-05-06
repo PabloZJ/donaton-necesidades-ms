@@ -1,6 +1,7 @@
 package microservice.necesidades.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import microservice.necesidades.model.UsuarioPerfil;
 import microservice.necesidades.service.UsuarioPerfilService;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioPerfilController {
 
     @Autowired
@@ -78,6 +80,20 @@ public class UsuarioPerfilController {
     @GetMapping("/rol/{rolId}")
     public ResponseEntity<List<UsuarioPerfil>> obtenerPorRol(@PathVariable Integer rolId) {
         List<UsuarioPerfil> lista = service.obtenerPorRol(rolId);
+        if (lista.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/centro-acopio/{centroAcopioId}")
+    public ResponseEntity<List<UsuarioPerfil>> obtenerPorCentroAcopio(@PathVariable Integer centroAcopioId) {
+        List<UsuarioPerfil> lista = service.obtenerPorCentroAcopio(centroAcopioId);
+        if (lista.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/comuna/{comunaId}")
+    public ResponseEntity<List<UsuarioPerfil>> obtenerPorComuna(@PathVariable Integer comunaId) {
+        List<UsuarioPerfil> lista = service.obtenerPorComuna(comunaId);
         if (lista.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(lista);
     }

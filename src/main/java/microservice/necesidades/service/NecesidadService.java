@@ -2,8 +2,10 @@ package microservice.necesidades.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import jakarta.transaction.Transactional;
 import microservice.necesidades.model.Necesidad;
 import microservice.necesidades.repository.NecesidadRepository;
@@ -25,6 +27,12 @@ public class NecesidadService {
 
     public Necesidad guardarNecesidad(Necesidad necesidad) {
         necesidad.setFechaReporte(LocalDateTime.now());
+
+        // si viene null, inicializamos
+        if (necesidad.getCantidadCubierta() == null) {
+            necesidad.setCantidadCubierta(java.math.BigDecimal.ZERO);
+        }
+
         return necesidadRepository.save(necesidad);
     }
 
@@ -34,11 +42,13 @@ public class NecesidadService {
         if (existente != null) {
             existente.setTipoRecursoId(necesidad.getTipoRecursoId());
             existente.setCantidad(necesidad.getCantidad());
+            existente.setCantidadCubierta(necesidad.getCantidadCubierta());
             existente.setDescripcion(necesidad.getDescripcion());
-            existente.setLatitud(necesidad.getLatitud());
-            existente.setLongitud(necesidad.getLongitud());
+            existente.setDireccion(necesidad.getDireccion());
+            existente.setComunaId(necesidad.getComunaId());
             existente.setEstado(necesidad.getEstado());
             existente.setReportadoPorUid(necesidad.getReportadoPorUid());
+
             return necesidadRepository.save(existente);
         }
 
@@ -49,20 +59,24 @@ public class NecesidadService {
         Necesidad existente = necesidadRepository.findById(id).orElse(null);
 
         if (existente != null) {
+
             if (necesidad.getTipoRecursoId() != null)
                 existente.setTipoRecursoId(necesidad.getTipoRecursoId());
 
             if (necesidad.getCantidad() != null)
                 existente.setCantidad(necesidad.getCantidad());
 
+            if (necesidad.getCantidadCubierta() != null)
+                existente.setCantidadCubierta(necesidad.getCantidadCubierta());
+
             if (necesidad.getDescripcion() != null)
                 existente.setDescripcion(necesidad.getDescripcion());
 
-            if (necesidad.getLatitud() != null)
-                existente.setLatitud(necesidad.getLatitud());
+            if (necesidad.getDireccion() != null)
+                existente.setDireccion(necesidad.getDireccion());
 
-            if (necesidad.getLongitud() != null)
-                existente.setLongitud(necesidad.getLongitud());
+            if (necesidad.getComunaId() != null)
+                existente.setComunaId(necesidad.getComunaId());
 
             if (necesidad.getEstado() != null)
                 existente.setEstado(necesidad.getEstado());
@@ -93,5 +107,9 @@ public class NecesidadService {
 
     public List<Necesidad> obtenerPorTipoRecurso(Integer tipoRecursoId) {
         return necesidadRepository.findByTipoRecursoId(tipoRecursoId);
+    }
+
+    public List<Necesidad> obtenerPorComuna(Integer comunaId) {
+        return necesidadRepository.findByComunaId(comunaId);
     }
 }

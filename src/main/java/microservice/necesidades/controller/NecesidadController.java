@@ -1,22 +1,16 @@
 package microservice.necesidades.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import microservice.necesidades.model.Necesidad;
 import microservice.necesidades.service.NecesidadService;
 
 @RestController
-@RequestMapping("/api/necesidades")
+@RequestMapping("/necesidades")
 public class NecesidadController {
 
     @Autowired
@@ -78,6 +72,13 @@ public class NecesidadController {
     @GetMapping("/recurso/{tipoId}")
     public ResponseEntity<List<Necesidad>> porTipoRecurso(@PathVariable Integer tipoId) {
         List<Necesidad> lista = service.obtenerPorTipoRecurso(tipoId);
+        if (lista.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/comuna/{comunaId}")
+    public ResponseEntity<List<Necesidad>> porComuna(@PathVariable Integer comunaId) {
+        List<Necesidad> lista = service.obtenerPorComuna(comunaId);
         if (lista.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(lista);
     }

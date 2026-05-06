@@ -16,7 +16,7 @@ import microservice.necesidades.model.EstadoNecesidad;
 import microservice.necesidades.service.EstadoNecesidadService;
 
 @RestController
-@RequestMapping("/api/estados-necesidad")
+@RequestMapping("/estados-necesidad")
 public class EstadoNecesidadController {
 
     @Autowired
