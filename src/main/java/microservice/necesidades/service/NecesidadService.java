@@ -112,4 +112,10 @@ public class NecesidadService {
     public List<Necesidad> obtenerPorComuna(Integer comunaId) {
         return necesidadRepository.findByComunaId(comunaId);
     }
+    public List<Necesidad> obtenerPorComunasIn(List<Integer> comunaIds) {
+    return necesidadRepository.findByComunaIdIn(comunaIds);
+    }
+    public List<Necesidad> obtenerPorCentro(Integer centroAcopioId) {
+    return necesidadRepository.findByCentroAcopioId(centroAcopioId);
+    }
 }

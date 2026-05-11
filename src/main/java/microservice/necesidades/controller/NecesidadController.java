@@ -4,7 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import microservice.necesidades.model.Necesidad;
 import microservice.necesidades.service.NecesidadService;
@@ -79,6 +88,18 @@ public class NecesidadController {
     @GetMapping("/comuna/{comunaId}")
     public ResponseEntity<List<Necesidad>> porComuna(@PathVariable Integer comunaId) {
         List<Necesidad> lista = service.obtenerPorComuna(comunaId);
+        if (lista.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(lista);
+    }
+    @GetMapping("/comunas")
+    public ResponseEntity<List<Necesidad>> porComunas(@RequestParam List<Integer> ids) {
+    List<Necesidad> lista = service.obtenerPorComunasIn(ids);
+    if (lista.isEmpty()) return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(lista);
+    }
+    @GetMapping("/centro/{centroAcopioId}")
+    public ResponseEntity<List<Necesidad>> porCentro(@PathVariable Integer centroAcopioId) {
+        List<Necesidad> lista = service.obtenerPorCentro(centroAcopioId);
         if (lista.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(lista);
     }

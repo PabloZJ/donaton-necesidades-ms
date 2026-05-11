@@ -2,6 +2,7 @@ package microservice.necesidades.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +43,9 @@ public class Necesidad {
 
     @Column(name = "comuna_id", nullable = false)
     private Integer comunaId;
+    
+    @Column(name = "centro_acopio_id")
+    private Integer centroAcopioId;
 
     @ManyToOne
     @JoinColumn(name = "estado_id", nullable = false)
